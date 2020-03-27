@@ -5,7 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -18,11 +20,16 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Font smallerF;
 	Timer frameDraw;
 	Rocketship rocket = new Rocketship(200,700,50,50);
+	ObjectManager oj = new ObjectManager(rocket);
+	public static BufferedImage image;
+	public static boolean needImage = true;
+	public static boolean gotImage = false;
 	GamePanel(){
 		titleFont = new Font("Arial", Font.PLAIN, 48);
 		smallerF = new Font("Arial", Font.PLAIN, 25);
 		frameDraw = new Timer(1000/60, this);
 		frameDraw.start();
+		loadImage("space.png");
 	}
 	@Override
 	public void paintComponent(Graphics g){
@@ -38,7 +45,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		
 	}
 	void updateGameState() {
-		
+		oj.update();
 	}
 	void updateEndState() {
 		
@@ -54,9 +61,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.drawString("press SPACE for instructions", 90, 500);
 	}
 	void drawGameState(Graphics g) {
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
-		rocket.draw(g);
+		if (gotImage) {
+			g.drawImage(image, 0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT, null);
+		} else {
+			g.setColor(Color.BLACK);
+			g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
+		}
+		oj.draw(g);
 	}
 	void drawEndState(Graphics g) {
 		g.setColor(Color.RED);
@@ -117,5 +128,16 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 	
 	
+	void loadImage(String imageFile) {
+		   if (needImage) {
+		        try {
+		            image = ImageIO.read(this.getClass().getResourceAsStream(imageFile));
+			    gotImage = true;
+		        } catch (Exception e) {
+		            
+		        }
+		        needImage = false;
+		    }
+		}
 }
 
