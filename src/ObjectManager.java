@@ -19,13 +19,16 @@ void addAlien() {
 aliens.add(new Alien(randy.nextInt(LeagueInvaders.WIDTH),0,50,50));
 }
 void checkCollision() {
-	for(int i = 1; i<aliens.size();i++) {
+	for(int i = 0; i<aliens.size();i++) {
 		if(rocket.collisionBox.intersects(aliens.get(i).collisionBox)) {
 			aliens.get(i).isActive = false;
 			rocket.isActive=false;
+		
 		}
-		if(projectiles.get(i).collisionBox.intersects(aliens.get(i).collisionBox)) {
-			aliens.get(i).isActive = false;
+		for(int j =0; i<projectiles.size(); j++) {
+			if(projectiles.get(j).collisionBox.intersects(aliens.get(j).collisionBox)) {
+				aliens.get(1).isActive = false;
+			}
 		}
 	}
 }
