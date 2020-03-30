@@ -13,11 +13,23 @@ ObjectManager(Rocketship rocket){
 	this.rocket = rocket;
 }
 void addProjectile(Projectile Object){
-	
+projectiles.add(Object);	
 }
 void addAlien() {
 aliens.add(new Alien(randy.nextInt(LeagueInvaders.WIDTH),0,50,50));
 }
+void checkCollision() {
+	for(int i = 1; i<aliens.size();i++) {
+		if(rocket.collisionBox.intersects(aliens.get(i).collisionBox)) {
+			aliens.get(i).isActive = false;
+			rocket.isActive=false;
+		}
+		if(projectiles.get(i).collisionBox.intersects(aliens.get(i).collisionBox)) {
+			aliens.get(i).isActive = false;
+		}
+	}
+}
+
 void update() {
 	for(int i = 1; i<aliens.size(); i++) {
 		aliens.get(i).update();
@@ -31,10 +43,18 @@ void update() {
 			aliens.get(p).isActive = false;
 		}
 	}
+	checkCollision();
+	purgeObjects();
 	
 }
 void draw(Graphics g) {
 	rocket.draw(g);
+	for(int i=1;i<aliens.size();i++) {
+		aliens.get(i).draw(g);
+	}
+	for(int i = 1; i<projectiles.size();i++) {
+		projectiles.get(i).draw(g);
+	}
 }
 void purgeObjects() {
 	for(int i = 1; i<aliens.size(); i++) {
@@ -48,9 +68,10 @@ void purgeObjects() {
 		}
 	}
 }
+
 @Override
 public void actionPerformed(ActionEvent e) {
 	// TODO Auto-generated method stub
-	
+	addAlien();
 }
 }
