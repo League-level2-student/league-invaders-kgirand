@@ -9,6 +9,10 @@ Rocketship rocket;
 ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 ArrayList<Alien> aliens = new ArrayList<Alien>();
 Random randy = new Random();
+public int score = 0;
+public int getScore() {
+	return this.score;
+}
 ObjectManager(Rocketship rocket){
 	this.rocket = rocket;
 }
@@ -25,9 +29,11 @@ void checkCollision() {
 			rocket.isActive=false;
 		
 		}
-		for(int j =0; i<projectiles.size(); j++) {
-			if(projectiles.get(j).collisionBox.intersects(aliens.get(j).collisionBox)) {
-				aliens.get(1).isActive = false;
+		for(int j =0; j<projectiles.size(); j++) {
+			if(projectiles.get(j).collisionBox.intersects(aliens.get(i).collisionBox)) {
+				aliens.get(i).isActive = false;
+				projectiles.get(j).isActive = false;
+				score ++;
 			}
 		}
 	}
@@ -46,6 +52,7 @@ void update() {
 			aliens.get(p).isActive = false;
 		}
 	}
+	rocket.update();
 	checkCollision();
 	purgeObjects();
 	
@@ -60,12 +67,12 @@ void draw(Graphics g) {
 	}
 }
 void purgeObjects() {
-	for(int i = 1; i<aliens.size(); i++) {
+	for(int i = aliens.size()-1; i>=0; i--) {
 		if(aliens.get(i).isActive == false) {
 			aliens.remove(aliens.get(i));
 		}
 	}
-	for(int p = 1; p < projectiles.size(); p++) {
+	for(int p = projectiles.size()-1; p >= 0; p--) {
 		if(projectiles.get(p).isActive == false) {
 			projectiles.remove(projectiles.get(p));
 		}

@@ -47,6 +47,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 	void updateGameState() {
 		oj.update();
+		if(rocket.isActive==false) {
+			currentState++;
+		}
 	}
 	void updateEndState() {
 		
@@ -68,6 +71,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			g.setColor(Color.BLACK);
 			g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
 		}
+		g.setFont(smallerF);
+		g.setColor(Color.YELLOW);
+		g.drawString(Integer.toString(oj.score), 200, 100);
 		oj.draw(g);
 	}
 	void drawEndState(Graphics g) {
@@ -88,7 +94,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		}else if(currentState == END){
 		    updateEndState();
 		}
-		System.out.println("action");
 		repaint();
 	}
 	void startGame() {
@@ -106,6 +111,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		if (e.getKeyCode()==KeyEvent.VK_ENTER) {
 		    if (currentState == END) {
 		        currentState = MENU;
+		        Rocketship rocketNew;
+		        rocketNew = new Rocketship(200, 700, 50, 50);
+		        rocket = rocketNew;
+		        oj = new ObjectManager(rocketNew);
 		    } 
 		    else if(currentState == MENU) {
 		    	startGame();

@@ -13,11 +13,11 @@ public class Projectile extends GameObject{
 		// TODO Auto-generated constructor stub
 		speed = 10;
 		loadImage("bullet.png");
-		super.update();
 	}
 	
 	void update() {
 		y-=speed;
+		super.update();
 	}
 	void draw(Graphics g) {
 		if (gotImage) {
