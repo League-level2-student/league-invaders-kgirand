@@ -15,7 +15,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	final int MENU = 0;
 	final int GAME = 1;
 	final int END = 2;
-	int currentState = MENU;
+	public int currentState = MENU;
 	Font titleFont;
 	Font smallerF;
 	Timer frameDraw;
