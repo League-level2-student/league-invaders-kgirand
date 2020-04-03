@@ -15,7 +15,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	final int MENU = 0;
 	final int GAME = 1;
 	final int END = 2;
-	public int currentState = MENU;
+	public int currentStatee = MENU;
 	Font titleFont;
 	Font smallerF;
 	Timer frameDraw;
@@ -34,11 +34,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 	@Override
 	public void paintComponent(Graphics g){
-		if(currentState == MENU){
+		if(currentStatee == MENU){
 		    drawMenuState(g);
-		}else if(currentState == GAME){
+		}else if(currentStatee == GAME){
 		    drawGameState(g);
-		}else if(currentState == END){
+		}else if(currentStatee == END){
 		    drawEndState(g);
 		}
 	}
@@ -48,7 +48,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	void updateGameState() {
 		oj.update();
 		if(rocket.isActive==false) {
-			currentState++;
+			currentStatee++;
 		}
 	}
 	void updateEndState() {
@@ -87,11 +87,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if(currentState == MENU){
+		if(currentStatee == MENU){
 		    updateMenuState();
-		}else if(currentState == GAME){
+		}else if(currentStatee == GAME){
 		    updateGameState();
-		}else if(currentState == END){
+		}else if(currentStatee == END){
 		    updateEndState();
 		}
 		repaint();
@@ -109,29 +109,29 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getKeyCode()==KeyEvent.VK_ENTER) {
-		    if (currentState == END) {
-		        currentState = MENU;
+		    if (currentStatee == END) {
+		        currentStatee = MENU;
 		        Rocketship rocketNew;
 		        rocketNew = new Rocketship(200, 700, 50, 50);
 		        rocket = rocketNew;
 		        oj = new ObjectManager(rocketNew);
 		    } 
-		    else if(currentState == MENU) {
+		    else if(currentStatee == MENU) {
 		    	startGame();
-		    	currentState = GAME;
+		    	currentStatee = GAME;
 		    }
-		    else if(currentState == GAME) {
+		    else if(currentStatee == GAME) {
 		    	alienSpawn.stop();
-		    	currentState++;
+		    	currentStatee++;
 		    }
 		    else {
-		        currentState++;
+		        currentStatee++;
 		    }
 		}   
-		if(currentState == GAME && e.getKeyCode()==KeyEvent.VK_SPACE) {
+		if(currentStatee == GAME && e.getKeyCode()==KeyEvent.VK_SPACE) {
 			oj.addProjectile(rocket.getProjectile());
 		}
-		if(currentState == 1) {
+		if(currentStatee == 1) {
 		if (e.getKeyCode()==KeyEvent.VK_UP&&rocket.y>1) {
 		    rocket.up();
 		}
